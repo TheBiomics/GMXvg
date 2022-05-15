@@ -1,7 +1,9 @@
 
-# GMXVG Helper
+# GMXvg: Utility to Convert/Plot GROMACS XVG files
 
-Commandline based GROMACS XVG File plotting tool for bulk graphs.
+Commandline based GROMACS XVG File plotting utility.
+* Discovers all the XVG files in the current or subdirectories and converts them in specified file formats (default JPG). 
+* Logs the summary of plots in a file to quickly access the plot values along with their standard deviation values.
 
 ## Supported Platforms
 
@@ -34,9 +36,11 @@ The utility was developed and tested for following OS. However, we expect it to 
 
 ## Example Commands
 
+The utility finds *.xvg files in a directory or sub-directory. It need not to specify a file. This utility is made for bulk conversion of XVG files and extract the results in a separate directory.
 ### Simple execution where it will find all the xvgs in subdirectories
 This will discover XVG files and plot XVG in JPEG Format
 * `gmxvg`
+* `gmxvg -b <path-to-dir-containing-xvg-files>`
 
 ### Generate multiple qualitie(s) of graphics
 * `gmxvg --dpi 96 300 600 --path_copy <path-to-aggregate-results-outside>`
@@ -49,8 +53,10 @@ This will discover XVG files and plot XVG in JPEG Format
 
 ## Development
 
-> If you are a developer, you can fork this repository and create a pull request to contribute.
+> To make any changes, fork this repository
+> To contribute, create a pull request after you fork or comment
 
 ## Future Improvements
 
 * GUI
+* Edit invidiual graphs through GUI
