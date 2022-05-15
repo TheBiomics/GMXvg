@@ -53,10 +53,14 @@ This will discover XVG files and plot XVG in JPEG Format
 
 ## Development
 
-> To make any changes, fork this repository
-> To contribute, create a pull request after you fork or comment
+* To make any changes, fork this repository
+* To contribute, create a pull request after you fork or comment
 
 ## Future Improvements
 
 * GUI
 * Edit invidiual graphs through GUI
+
+## Other things
+* We recommend you going through the code to access the precision and quality of the generated results before you use.
+* The code is free to be used by students, scholars, and professors.
