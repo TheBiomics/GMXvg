@@ -37,7 +37,7 @@ The utility was developed and tested for following OS. However, we expect it to 
 ## Example Commands
 
 The utility finds *.xvg files in a directory or sub-directory. It need not to specify a file. This utility is made for bulk conversion of XVG files and extract the results in a separate directory.
-### Simple execution where it will find all the xvgs in subdirectories
+### Simple (using executable file)
 This will discover XVG files and plot XVG in JPEG Format
 * `gmxvg`
 * `gmxvg -b <path-to-dir-containing-xvg-files>`
