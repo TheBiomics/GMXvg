@@ -12,6 +12,7 @@ def main():
   _plotter = GMXVGHelper()
   _parser = ARGUMENT.ArgumentParser(prog=GMXVGHelper.name)
 
+  _parser.add_argument('-b', '--path_base', nargs = None, default = OS.getcwd(), help = 'Provide base directory. Default: %(default)s.')
   _parser.add_argument('-e', '--export_ext', nargs = "*", default = ["jpg"], help = 'Output formats. Default: %(default)s.')
   _parser.add_argument('-d', '--dpi', nargs = "*", default = [300], help = 'Output quality. Default: %(default)s.')
 

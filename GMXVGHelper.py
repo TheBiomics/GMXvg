@@ -67,7 +67,7 @@ class GMXVGHelper(Helper):
             "mean": _result[_col].mean(),
             "std": _result[_col].std(),
         })
-    if getattr(self, "flag_export_csv", False):
+    if getattr(self, "flag_export_csv", False) and len(_result_dict) > 0:
       _results = PD.DataFrame(_result_dict)
       self.log_info(f"Writing results to {self.csv_filepath}.")
       _results.to_csv(self.csv_filepath, index=False)

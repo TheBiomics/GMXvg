@@ -1,6 +1,16 @@
 
 # GMXVG Helper
 
+Commandline based GROMACS XVG File plotting tool for bulk graphs.
+
+## Supported Platforms
+
+The utility was developed and tested for following OS. However, we expect it to work on all windows and linux environment.
+
+* Windows 11
+* Ubuntu 20 LTS
+
+
 ## Command Structure
 
 * `--<key>=<value>`: Double dash separated by equal sign
@@ -36,3 +46,11 @@ This will discover XVG files and plot XVG in JPEG Format
 
 ### Customised
 * `gmxvg --dpi 96 -merge_patterns RMSD-of-Ligand.xvg RMSD-of-Protein-C-Alpha.xvg Gyration-of-Protein.xvg NPT-Temperature.xvg Inter-Ligand-Protein-H-Bonds.xvg --replacements "Receptor1--Lig2":p53-miR5 "Recptor2--Lig3":p53-miR3 --path_move <path-to-output-dir>/graphs`
+
+## Development
+
+> If you are a developer, you can fork this repository and create a pull request to contribute.
+
+## Future Improvements
+
+* GUI
