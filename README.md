@@ -34,6 +34,16 @@ The utility was developed and tested for following OS. However, we expect it to 
   * `flag_export_csv`: yes|no; If results should be exported in the form of CSV (includes directory name, file name, average of lines plotted and their standard deviation)
   * `flag_export_plot`: yes|no; To specify if graphics should be exported or not
 
+## Fastest Execution
+
+* Download [GMXvg Executable](https://github.com/TheBiomics/GMXvg/releases/download/v0.3/gmxvg-win-v0.3.exe) (_or check [latest release](https://github.com/TheBiomics/GMXvg/releases) for improved features_) and place in the XVG contained in the same directory or subdirectories.
+* After execution all xvgs will be converted to jpg. For example, "rmsd-protein.xvg" will be converted to "rmsd-protein.dpi300.jpeg". 
+* After execution a CSV file containing mean and standard deviation of of the plotted lines in each xvg. For example, for gyration plot "gyration.xvg", the CSV file will hold information about `dir`: where xvg was stored, `file`: name of the xvg file which was converted to jpg,`plot`: label of the plotted line, and `mean` and `std` columns. 
+* Example result output
+
+![image](https://user-images.githubusercontent.com/87003331/168798303-330a9d46-2fed-4a53-b05f-35307b3a939f.png)
+  
+
 ## Example Commands
 
 The utility finds *.xvg files in a directory or sub-directory. It need not to specify a file. This utility is made for bulk conversion of XVG files and extract the results in a separate directory.
