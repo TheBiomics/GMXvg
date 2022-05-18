@@ -2,7 +2,7 @@
 # GMXvg: Utility to Convert/Plot GROMACS XVG files
 
 Commandline based GROMACS XVG File plotting utility.
-* Discovers all the XVG files in the current or subdirectories and converts them in specified file formats (default JPG). 
+* Discovers all the XVG files in the current or subdirectories and converts them in specified file formats (default JPG).
 * Logs the summary of plots in a file to quickly access the plot values along with their standard deviation values.
 
 ## Supported Platforms
@@ -37,12 +37,12 @@ The utility was developed and tested for following OS. However, we expect it to 
 ## Fastest Execution (Download and go solution!)
 
 * Download [GMXvg executable file (Windows 10/11)](https://github.com/TheBiomics/GMXvg/releases/download/v0.3/gmxvg-win-v0.3.exe) (_or check [latest or compatible release](https://github.com/TheBiomics/GMXvg/releases) for improved features_) and copy/paste the executable file in the directory where XVG is contained or the directory having subdirectories with XVG extension files. It will discover xvg extension files and process them automatically.
-* After execution all xvgs will be converted to jpg. For example, "rmsd-protein.xvg" will be converted to "rmsd-protein.dpi300.jpeg". 
-* After execution a CSV file containing mean and standard deviation of of the plotted lines in each xvg. For example, for gyration plot "gyration.xvg", the CSV file will hold information about `dir`: where xvg was stored, `file`: name of the xvg file which was converted to jpg,`plot`: label of the plotted line, and `mean` and `std` columns. 
+* After execution all xvgs will be converted to jpg. For example, "rmsd-protein.xvg" will be converted to "rmsd-protein.dpi300.jpeg".
+* After execution a CSV file containing mean and standard deviation of of the plotted lines in each xvg. For example, for gyration plot "gyration.xvg", the CSV file will hold information about `dir`: where xvg was stored, `file`: name of the xvg file which was converted to jpg,`plot`: label of the plotted line, and `mean` and `std` columns.
 * Example result output
 
 ![image](https://user-images.githubusercontent.com/87003331/168798303-330a9d46-2fed-4a53-b05f-35307b3a939f.png)
-  
+
 * To obtain customised out or results see commandline operations.
 
 ## Example Commands
@@ -75,3 +75,11 @@ This will discover XVG files and plot XVG in JPEG Format
 ## Other things
 * We recommend you going through the code to access the precision and quality of the generated results before you use.
 * The code is free to be used by students, scholars, and professors.
+
+## Development and Testing to Create Executable Files
+
+* `python -m venv <path-to>-env` for Windows and `sudo apt-get install python3.8-venv` for Ubuntu
+* Install missing packages
+* `<path-to>-env/Scripts/activate` for Windows and `source <path-to>-env/bin/activate` for Ubuntu
+* `pip install pyinstaller`
+* `pyinstaller gmxvg --onefile`
