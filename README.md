@@ -1,9 +1,9 @@
 
 ```diff
-+ Latest release [GMXvg version 0.3](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3)
++ Latest release GMXvg v0.3
 + with Ubuntu and windows executable to download and run in the directory containing XVG files.
 ```
-
+> Get [GMXvg v0.3 here](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3).
 
 # GMXvg: Utility to Convert/Plot GROMACS XVG files
 
