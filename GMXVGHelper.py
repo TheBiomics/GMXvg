@@ -11,11 +11,14 @@ class GMXVGHelper(Helper):
 
   def __init__(self, *args, **kwargs):
     super(GMXVGHelper, self).__init__(**kwargs)
+    PLOT.rcParams.update({
+      "text.usetex": True,
+      "font.family": "Helvetica"
+    })
     self.__update_attr(**kwargs)
 
   def __set_defaults(self):
-    if getattr(self, "csv_filepath") is None and len(getattr(self, "csv_filename", "")) > 4:
-      self.csv_filepath = f"{self.path_base}{OS.sep}{self.csv_filename}"
+    self.csv_filepath = f"{self.path_base}{OS.sep}{self.csv_filename}"
 
   def __update_attr(self, *args, **kwargs):
     if not hasattr(self, "__defaults"): self.__defaults =  {
@@ -104,7 +107,8 @@ class GMXVGHelper(Helper):
   def process_text(_str):
       _str = _str.strip()
       _str = REGEX.sub(r'\s{2,}', " ", _str)
-      _str = _str.replace(r"\s", "").replace(r"\N", "")
+      _str = r'{}'.format(_str)
+      _str = _str.replace(r"\s", r"\textsubscript{").replace(r"\N", "}")
       return _str
 
   @staticmethod
@@ -131,19 +135,23 @@ class GMXVGHelper(Helper):
     for _line in _xvg_content:
         _line = _line.strip("\n").strip()
         if _line.startswith("#"):
-            continue # As it is a comment
+          continue # As it is a comment
         elif _line.startswith("@"):
-            _attr = self.process_attrib(_line)
-            if len(_attr.keys()) > 0 and isinstance(_attr, dict):
-                _attributes.update(_attr)
+          _attr = self.process_attrib(_line)
+          if len(_attr.keys()) > 0 and isinstance(_attr, dict):
+            _attributes.update(_attr)
         else:
-            _data_rows.append(_line.split())
+          _data_rows.append(_line.split())
+
     _df = PD.DataFrame(_data_rows)
     _df = _df.apply(PD.to_numeric)
 
     _xaxis_label = _attributes.get('xaxis label')
     _yaxis_label = _attributes.get('yaxis label')
     _legends = [_attributes[_k] for _k in _attributes if "legend" in _k]
+
+    # print(_attributes.get("s1 legend"))
+    # raise Exception
 
     if _df.shape[1] == 2 and len(_legends) < 1:
       _legends = [_yaxis_label]
@@ -153,7 +161,6 @@ class GMXVGHelper(Helper):
       _df.columns = _legends
     else:
       self.log_info(f"Cannot change the column names in {_xvg_path}.\nCOLUMNS = {_df.columns}\nLEGENDS={_legends}", type="error")
-
     return (_df, _attributes)
 
   # Parse XVG File and Plot Graph
@@ -171,7 +178,8 @@ class GMXVGHelper(Helper):
     _exp = getattr(self, "flag_export_plot", "yes")
 
     if _exp.lower().startswith("y"):
-      _plot_title = REGEX.sub(r'[\s-]{2,}', " ", self.filename(_xvg))
+      _plot_title = REGEX.sub(r'[\s-]{1,}', " ", self.filename(_xvg))
+
       if _attributes.get("subtitle"):
           _subtitle = _attributes.get("subtitle")
           _plot_title = f"{_plot_title}\n{_subtitle}"
