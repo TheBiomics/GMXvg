@@ -11,11 +11,14 @@ class GMXVGHelper(Helper):
 
   def __init__(self, *args, **kwargs):
     super(GMXVGHelper, self).__init__(**kwargs)
+    PLOT.rcParams.update({
+      "text.usetex": True,
+      "font.family": "Helvetica"
+    })
     self.__update_attr(**kwargs)
 
   def __set_defaults(self):
-    if getattr(self, "csv_filepath") is None and len(getattr(self, "csv_filename", "")) > 4:
-      self.csv_filepath = f"{self.path_base}{OS.sep}{self.csv_filename}"
+    self.csv_filepath = f"{self.path_base}{OS.sep}{self.csv_filename}"
 
   def __update_attr(self, *args, **kwargs):
     if not hasattr(self, "__defaults"): self.__defaults =  {
@@ -25,7 +28,7 @@ class GMXVGHelper(Helper):
           '(nm)': None,
           'RMSD (nm)': None,
         },
-        "replacements": None,
+        "replacements": {},
         "csv_filename": "XVG-Plot-Values.csv",
         "csv_filepath": None,
         "path_base": OS.getcwd(),
@@ -39,7 +42,7 @@ class GMXVGHelper(Helper):
         "flag_plot_std": "no",
         "flag_export_csv": "no",
         "flag_export_plot": "y",
-        "group_part": -2,
+        "uid_part": -2,
         "output_files": []
       }
 
@@ -104,7 +107,8 @@ class GMXVGHelper(Helper):
   def process_text(_str):
       _str = _str.strip()
       _str = REGEX.sub(r'\s{2,}', " ", _str)
-      _str = _str.replace(r"\s", "").replace(r"\N", "")
+      _str = r'{}'.format(_str)
+      _str = _str.replace(r"\s", r"\textsubscript{").replace(r"\N", "}")
       return _str
 
   @staticmethod
@@ -131,13 +135,14 @@ class GMXVGHelper(Helper):
     for _line in _xvg_content:
         _line = _line.strip("\n").strip()
         if _line.startswith("#"):
-            continue # As it is a comment
+          continue # As it is a comment
         elif _line.startswith("@"):
-            _attr = self.process_attrib(_line)
-            if len(_attr.keys()) > 0 and isinstance(_attr, dict):
-                _attributes.update(_attr)
+          _attr = self.process_attrib(_line)
+          if len(_attr.keys()) > 0 and isinstance(_attr, dict):
+            _attributes.update(_attr)
         else:
-            _data_rows.append(_line.split())
+          _data_rows.append(_line.split())
+
     _df = PD.DataFrame(_data_rows)
     _df = _df.apply(PD.to_numeric)
 
@@ -153,7 +158,6 @@ class GMXVGHelper(Helper):
       _df.columns = _legends
     else:
       self.log_info(f"Cannot change the column names in {_xvg_path}.\nCOLUMNS = {_df.columns}\nLEGENDS={_legends}", type="error")
-
     return (_df, _attributes)
 
   # Parse XVG File and Plot Graph
@@ -171,7 +175,8 @@ class GMXVGHelper(Helper):
     _exp = getattr(self, "flag_export_plot", "yes")
 
     if _exp.lower().startswith("y"):
-      _plot_title = REGEX.sub(r'[\s-]{2,}', " ", self.filename(_xvg))
+      _plot_title = REGEX.sub(r'[\s-]{1,}', " ", self.filename(_xvg))
+
       if _attributes.get("subtitle"):
           _subtitle = _attributes.get("subtitle")
           _plot_title = f"{_plot_title}\n{_subtitle}"
@@ -210,6 +215,7 @@ class GMXVGHelper(Helper):
 
   def __merge_xvgs(self, *args, **kwargs):
     self.__update_attr(**kwargs)
+
     self.merge_patterns = [self.merge_patterns] if isinstance(self.merge_patterns, str) else self.merge_patterns
     _replacements = {}
     _replacements.update(self.replacements_gmx)
@@ -224,17 +230,16 @@ class GMXVGHelper(Helper):
     if isinstance(self.path_base, (str)):
       for _mp in self.merge_patterns:
         _xvgs = self.get_file_types(self.path_base, _mp)
+
         self.log_info(f"Merging {len(_xvgs)} xvg(s) for {_mp} pattern.")
         _merged_df = None
         _plot_name = self.filename(_mp.replace("*", ""))
         _y_label = None
         for _xvg in _xvgs:
           _df, _attr = self.__parse_xvg_table_attributes(_xvg)
-
-          _complex_name = self.get_parts(_xvg, self.group_part) #
+          _complex_name = self.get_parts(_xvg, self.uid_part) #
 
           _xvg_str_rep = _replacements.copy()
-
           for _k, _v in _xvg_str_rep.items():
             _complex_name = _complex_name.replace(_k, _v) if _v is not None else _complex_name
 
@@ -253,34 +258,39 @@ class GMXVGHelper(Helper):
           else:
             _merged_df[_complex_name] = _df_min[_complex_name]
 
-        _plot = _merged_df.set_index(_required_cols[0]).plot(title=_plot_name, lw=1)
-        _legend = _plot.legend(fontsize=6)
-        _plot.set_ylabel(_y_label)
-        for _pl in _plot.get_lines():
-          _pl_ydata = _pl.get_ydata()
-          _pl_ydata_mean = _pl_ydata.mean()
 
-          if self.flag_plot_mean.lower().startswith("y"):
-            _plot.axhline(y=_pl_ydata_mean, color=_pl.get_color(), linestyle="--", linewidth=1)
+        if isinstance(_merged_df, PD.DataFrame):
+          _plot = _merged_df.set_index(_required_cols[0]).plot(title=_plot_name, lw=1)
+          _legend = _plot.legend(fontsize=6)
+          _plot.set_ylabel(_y_label)
+          for _pl in _plot.get_lines():
+            _pl_ydata = _pl.get_ydata()
+            _pl_ydata_mean = _pl_ydata.mean()
 
-          if self.flag_plot_std.lower().startswith("y"):
-            _pl_ydata_std = _pl_ydata.std()
-            _pl_ydata_upper = _pl_ydata_mean + _pl_ydata_std
-            _pl_ydata_lower = _pl_ydata_mean - _pl_ydata_std
-            _plot.axhline(y=_pl_ydata_upper, color=_pl.get_color(), linestyle="--", linewidth=0.5)
-            _plot.axhline(y=_pl_ydata_lower, color=_pl.get_color(), linestyle="--", linewidth=0.5)
+            if self.flag_plot_mean.lower().startswith("y"):
+              _plot.axhline(y=_pl_ydata_mean, color=_pl.get_color(), linestyle="--", linewidth=1)
 
-        _dpi = [self.dpi] if isinstance(self.dpi, (str, int)) else self.dpi
+            if self.flag_plot_std.lower().startswith("y"):
+              _pl_ydata_std = _pl_ydata.std()
+              _pl_ydata_upper = _pl_ydata_mean + _pl_ydata_std
+              _pl_ydata_lower = _pl_ydata_mean - _pl_ydata_std
+              _plot.axhline(y=_pl_ydata_upper, color=_pl.get_color(), linestyle="--", linewidth=0.5)
+              _plot.axhline(y=_pl_ydata_lower, color=_pl.get_color(), linestyle="--", linewidth=0.5)
 
-        for _d in _dpi:
-          _out_file = f"{self.path_base}/Combined-{_plot_name}.{_d}.jpg"
-          print(_out_file)
-          self.output_files.append(_out_file)
-          _figure = _plot.get_figure()
-          _figure.savefig(_out_file, dpi=int(_d), bbox_inches='tight')
+          _dpi = [self.dpi] if isinstance(self.dpi, (str, int)) else self.dpi
 
-        _figure.clear()
-        PLOT.close(_figure)
+          for _d in _dpi:
+            _out_file = f"{self.path_base}/Combined-{_plot_name}.{_d}.jpg"
+            self.output_files.append(_out_file)
+            _figure = _plot.get_figure()
+            _figure.savefig(_out_file, dpi=int(_d), bbox_inches='tight')
+
+          _figure.clear()
+          PLOT.close(_figure)
+          PLOT.cla()
+          PLOT.cls()
+        else:
+          self.log_error("Some error occurred.")
     else:
       self.log_error("Error with working dir.")
 

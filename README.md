@@ -1,5 +1,6 @@
 
 ```diff
++ Upcoming Release GMXvg-v0.4
 + Latest release GMXvg v0.3
 + with Ubuntu and windows executable to download and run in the directory containing XVG files.
 ```
@@ -8,7 +9,7 @@
 # GMXvg: Utility to Convert/Plot GROMACS XVG files
 
 Commandline based GROMACS XVG File plotting utility.
-* Discovers all the XVG files in the current or subdirectories and converts them in specified file formats (default JPG). 
+* Discovers all the XVG files in the current or subdirectories and converts them in specified file formats (default JPG).
 * Logs the summary of plots in a file to quickly access the plot values along with their standard deviation values.
 
 ## Supported Platforms
@@ -17,7 +18,6 @@ The utility was developed and tested for following OS. However, we expect it to 
 
 * Windows 11
 * Ubuntu 20 LTS
-
 
 ## Command Structure
 
@@ -43,17 +43,18 @@ The utility was developed and tested for following OS. However, we expect it to 
 ## Fastest Execution (Download and go solution!)
 
 * Download [GMXvg executable file (Windows 10/11)](https://github.com/TheBiomics/GMXvg/releases/download/v0.3/gmxvg-win-v0.3.exe) (_or check [latest or compatible release](https://github.com/TheBiomics/GMXvg/releases) for improved features_) and copy/paste the executable file in the directory where XVG is contained or the directory having subdirectories with XVG extension files. It will discover xvg extension files and process them automatically.
-* After execution all xvgs will be converted to jpg. For example, "rmsd-protein.xvg" will be converted to "rmsd-protein.dpi300.jpeg". 
-* After execution a CSV file containing mean and standard deviation of of the plotted lines in each xvg. For example, for gyration plot "gyration.xvg", the CSV file will hold information about `dir`: where xvg was stored, `file`: name of the xvg file which was converted to jpg,`plot`: label of the plotted line, and `mean` and `std` columns. 
+* After execution all xvgs will be converted to jpg. For example, "rmsd-protein.xvg" will be converted to "rmsd-protein.dpi300.jpeg".
+* After execution a CSV file containing mean and standard deviation of of the plotted lines in each xvg. For example, for gyration plot "gyration.xvg", the CSV file will hold information about `dir`: where xvg was stored, `file`: name of the xvg file which was converted to jpg,`plot`: label of the plotted line, and `mean` and `std` columns.
 * Example result output
 
 ![image](https://user-images.githubusercontent.com/87003331/168798303-330a9d46-2fed-4a53-b05f-35307b3a939f.png)
-  
+
 * To obtain customised out or results see commandline operations.
 
 ## Example Commands
 
 The utility finds *.xvg files in a directory or sub-directory. It need not to specify a file. This utility is made for bulk conversion of XVG files and extract the results in a separate directory.
+
 ### Simple (using executable file)
 This will discover XVG files and plot XVG in JPEG Format
 * `gmxvg`
@@ -66,7 +67,14 @@ This will discover XVG files and plot XVG in JPEG Format
 * `gmxvg --export_ext JPEG pdf`
 
 ### Customised
-* `gmxvg --dpi 96 -merge_patterns RMSD-of-Ligand.xvg RMSD-of-Protein-C-Alpha.xvg Gyration-of-Protein.xvg NPT-Temperature.xvg Inter-Ligand-Protein-H-Bonds.xvg --replacements "Receptor1--Lig2":p53-miR5 "Recptor2--Lig3":p53-miR3 --path_move <path-to-output-dir>/graphs`
+
+* To merge files having ending passed to `-merge_patterns RMSD.xvg` so that it will combine all these in one file. `--uid_part -1` parameter can be useful to define the Legend of the merged graphs.
+
+```gmxvg --dpi 96 -merge_patterns RMSD-of-Ligand.xvg RMSD-of-Protein-C-Alpha.xvg Gyration-of-Protein.xvg NPT-Temperature.xvg Inter-Ligand-Protein-H-Bonds.xvg --replacements "Receptor1--Lig2":p53-miR5 "Recptor2--Lig3":p53-miR3 --path_move <path-to-output-dir>/graphs```
+
+* Example to merge Protein-RMSD.xvg and Ligand-RMSD.xvg files in the same directory. Use `-replacements` options to replace any text in the plot.
+
+```gmxvg -merge_patterns RMSD.xvg -uid_part -1```
 
 ## Development
 
@@ -77,7 +85,22 @@ This will discover XVG files and plot XVG in JPEG Format
 
 * GUI
 * Edit invidiual graphs through GUI
+* Small File Size
+* Fast Executable
+* Webserver to convert and combine graphs
 
 ## Other things
 * We recommend you going through the code to access the precision and quality of the generated results before you use.
 * The code is free to be used by students, scholars, and professors.
+
+## Development and Testing to Create Executable Files
+
+* `python -m venv <path-to>-env` for Windows and `sudo apt-get install python3.8-venv` for Ubuntu
+* Install missing packages
+* `<path-to>-env/Scripts/activate` for Windows and `source <path-to>-env/bin/activate` for Ubuntu
+* `pip install pyinstaller`
+* `pyinstaller gmxvg --onefile`
+
+## BugFixes
+* Rendering LaTeX Labels from XVG in matplotlib
+* `-uid_part <N>` updated to managed merged graphs when `/` splitted part will decide the legends in merged graphs
