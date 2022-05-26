@@ -1,5 +1,6 @@
 
 ```diff
++ Upcoming Release GMXvg-v0.4
 + Latest release GMXvg v0.3
 + with Ubuntu and windows executable to download and run in the directory containing XVG files.
 ```
@@ -17,7 +18,6 @@ The utility was developed and tested for following OS. However, we expect it to 
 
 * Windows 11
 * Ubuntu 20 LTS
-
 
 ## Command Structure
 
@@ -54,6 +54,7 @@ The utility was developed and tested for following OS. However, we expect it to 
 ## Example Commands
 
 The utility finds *.xvg files in a directory or sub-directory. It need not to specify a file. This utility is made for bulk conversion of XVG files and extract the results in a separate directory.
+
 ### Simple (using executable file)
 This will discover XVG files and plot XVG in JPEG Format
 * `gmxvg`
@@ -66,7 +67,14 @@ This will discover XVG files and plot XVG in JPEG Format
 * `gmxvg --export_ext JPEG pdf`
 
 ### Customised
-* `gmxvg --dpi 96 -merge_patterns RMSD-of-Ligand.xvg RMSD-of-Protein-C-Alpha.xvg Gyration-of-Protein.xvg NPT-Temperature.xvg Inter-Ligand-Protein-H-Bonds.xvg --replacements "Receptor1--Lig2":p53-miR5 "Recptor2--Lig3":p53-miR3 --path_move <path-to-output-dir>/graphs`
+
+* To merge files having ending passed to `-merge_patterns RMSD.xvg` so that it will combine all these in one file. `--uid_part -1` parameter can be useful to define the Legend of the merged graphs.
+
+```gmxvg --dpi 96 -merge_patterns RMSD-of-Ligand.xvg RMSD-of-Protein-C-Alpha.xvg Gyration-of-Protein.xvg NPT-Temperature.xvg Inter-Ligand-Protein-H-Bonds.xvg --replacements "Receptor1--Lig2":p53-miR5 "Recptor2--Lig3":p53-miR3 --path_move <path-to-output-dir>/graphs```
+
+* Example to merge Protein-RMSD.xvg and Ligand-RMSD.xvg files in the same directory. Use `-replacements` options to replace any text in the plot.
+
+```gmxvg -merge_patterns RMSD.xvg -uid_part -1```
 
 ## Development
 
@@ -77,6 +85,9 @@ This will discover XVG files and plot XVG in JPEG Format
 
 * GUI
 * Edit invidiual graphs through GUI
+* Small File Size
+* Fast Executable
+* Webserver to convert and combine graphs
 
 ## Other things
 * We recommend you going through the code to access the precision and quality of the generated results before you use.
@@ -89,3 +100,7 @@ This will discover XVG files and plot XVG in JPEG Format
 * `<path-to>-env/Scripts/activate` for Windows and `source <path-to>-env/bin/activate` for Ubuntu
 * `pip install pyinstaller`
 * `pyinstaller gmxvg --onefile`
+
+## BugFixes
+* Rendering LaTeX Labels from XVG in matplotlib
+* `-uid_part <N>` updated to managed merged graphs when `/` splitted part will decide the legends in merged graphs
