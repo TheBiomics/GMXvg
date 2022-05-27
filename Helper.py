@@ -78,8 +78,7 @@ class Helper:
     _arg_aggregator = {}
     _key = None
     for _ua in _un_args:
-
-      if _ua.startswith(("-", "--")):
+      if _ua.startswith(("-", "--")) and not _ua.lstrip("-").isdigit():
         _key = _ua.strip("-")
         _key, _attached_value = _key.split("=", 1) if "=" in _key else (_key, "")
 
@@ -90,7 +89,6 @@ class Helper:
 
       elif _key and _key in _arg_aggregator.keys():
         _arg_aggregator[_key].append(_ua)
-
     return self.flatten_args(_arg_aggregator)
 
   def check_path(self, *args, **kwargs):
@@ -191,11 +189,11 @@ class Helper:
 
   def get_parts(self, *args, **kwargs):
     _text = args[0] if len(args) > 0 else kwargs.get("text")
-    _position = args[2] if len(args) > 2 else kwargs.get("position", -3)
-    _delimiter = args[3] if len(args) > 3 else kwargs.get("delimiter", "/")
+    _position = args[1] if len(args) > 1 else kwargs.get("position", -3)
+    _delimiter = args[2] if len(args) > 2 else kwargs.get("delimiter", "/")
 
     _text = _text.split(_delimiter)
-    return _text[_position]
+    return _text[int(_position)] if abs(int(_position)) <= len(_text) else _text[-1]
 
   def delete_path(self, *args, **kwargs):
     _path = args[0] if len(args) > 0 else kwargs.get("path")
