@@ -192,6 +192,9 @@ class Helper:
     _position = args[1] if len(args) > 1 else kwargs.get("position", -3)
     _delimiter = args[2] if len(args) > 2 else kwargs.get("delimiter", "/")
 
+    if isinstance(_position, (list, tuple, set)):
+      _position = _position[0]
+
     _text = _text.split(_delimiter)
     return _text[int(_position)] if abs(int(_position)) <= len(_text) else _text[-1]
 

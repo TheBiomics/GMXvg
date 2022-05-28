@@ -27,6 +27,7 @@ class GMXVGHelper(Helper):
           'Rg': None,
           '(nm)': None,
           'RMSD (nm)': None,
+          ".xvg": ""
         },
         "replacements": {},
         "csv_filename": "XVG-Plot-Values.csv",
@@ -106,9 +107,12 @@ class GMXVGHelper(Helper):
   @staticmethod
   def process_text(_str):
       _str = _str.strip()
-      _str = REGEX.sub(r'\s{2,}', " ", _str)
       _str = r'{}'.format(_str)
-      _str = _str.replace(r"\s", r"\textsubscript{").replace(r"\N", "}")
+      _str = REGEX.sub(r'\s{2,}', " ", _str)
+      _str = REGEX.sub(r'[\s-]{1,}', " ", _str)
+      _str = _str.replace("_", "-")
+      _str = REGEX.sub(r'\\S(\w+)\\N', "$^\\1$", _str)
+      _str = REGEX.sub(r'\\s(\w)\\N', "$_\\1$", _str)
       return _str
 
   @staticmethod
@@ -175,10 +179,10 @@ class GMXVGHelper(Helper):
     _exp = getattr(self, "flag_export_plot", "yes")
 
     if _exp.lower().startswith("y"):
-      _plot_title = REGEX.sub(r'[\s-]{1,}', " ", self.filename(_xvg))
+      _plot_title = self.process_text(self.filename(_xvg))
 
       if _attributes.get("subtitle"):
-          _subtitle = _attributes.get("subtitle")
+          _subtitle = self.process_text(_attributes.get("subtitle"))
           _plot_title = f"{_plot_title}\n{_subtitle}"
 
       _plot = _df.set_index(_df.columns[0]).plot(title=_plot_title, linewidth=1)
@@ -262,7 +266,7 @@ class GMXVGHelper(Helper):
         if isinstance(_merged_df, PD.DataFrame):
           _plot = _merged_df.set_index(_required_cols[0]).plot(title=_plot_name, lw=1)
           _legend = _plot.legend(fontsize=6)
-          _plot.set_ylabel(_y_label)
+          _plot.set_ylabel(self.process_text(_y_label))
           for _pl in _plot.get_lines():
             _pl_ydata = _pl.get_ydata()
             _pl_ydata_mean = _pl_ydata.mean()
@@ -288,7 +292,6 @@ class GMXVGHelper(Helper):
           _figure.clear()
           PLOT.close(_figure)
           PLOT.cla()
-          PLOT.cls()
         else:
           self.log_error("Some error occurred.")
     else:
@@ -299,8 +302,8 @@ class GMXVGHelper(Helper):
     self.pattern_xvg = [self.pattern_xvg] if isinstance(self.pattern_xvg, str) else self.pattern_xvg
 
     if isinstance(self.path_base, (str)):
-        self.__plot_xvgs(self.__find_xvgs())
-        self.__rearrange_files()
-        self.__merge_xvgs() if len(self.merge_patterns) > 0 else ""
+      self.__merge_xvgs() if len(self.merge_patterns) > 0 else ""
+      self.__plot_xvgs(self.__find_xvgs())
+      self.__rearrange_files()
     else:
       self.log_error("Error with working dir.")
