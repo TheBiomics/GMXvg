@@ -27,7 +27,8 @@ class GMXVGHelper(Helper):
           'Rg': None,
           '(nm)': None,
           'RMSD (nm)': None,
-          ".xvg": ""
+          ".xvg": "",
+          "Plot": ""
         },
         "replacements": {},
         "csv_filename": "XVG-Plot-Values.csv",
@@ -70,6 +71,11 @@ class GMXVGHelper(Helper):
             "plot": _col,
             "mean": _result[_col].mean(),
             "std": _result[_col].std(),
+            "min": _result[_col].min(),
+            "q_10": _result[_col].quantile(0.1),
+            "q_50": _result[_col].quantile(0.5),
+            "q_90": _result[_col].quantile(0.9),
+            "max": _result[_col].max(),
         })
     if getattr(self, "flag_export_csv", False) and len(_result_dict) > 0:
       _results = PD.DataFrame(_result_dict)
@@ -98,11 +104,13 @@ class GMXVGHelper(Helper):
   def __rearrange_files(self):
     _bool_copy = getattr(self, "path_copy") and len(self.path_copy) > 2
     _bool_move = getattr(self, "path_move") and len(self.path_move) > 2
+    self.output_files.append(self.csv_filepath)
     for _file in self.output_files:
       _rel_path = _file.split(self.path_base)[-1]
       _rel_path = _rel_path.strip("/")
-      self.copy(_file, f"{self.path_copy}/{_rel_path}") if _bool_copy else None
-      self.move(_file, f"{self.path_move}/{_rel_path}") if _bool_move else None
+
+      self.copy(_file, f"{self.path_copy}/{_rel_path}") if _bool_copy and self.check_path(_file) else None
+      self.move(_file, f"{self.path_move}/{_rel_path}") if _bool_move and self.check_path(_file) else None
 
   @staticmethod
   def process_text(_str):
