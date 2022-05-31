@@ -1,10 +1,9 @@
 
 ```diff
 + Upcoming Release GMXvg-v0.4
-+ Latest release GMXvg v0.3
-+ with Ubuntu and windows executable to download and run in the directory containing XVG files.
+
 ```
-> Get [GMXvg v0.3 here](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3).
+> Get [GMXvg v0.3 here](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3) for Ubuntu and Windows.
 
 # GMXvg: Utility to Convert/Plot GROMACS XVG files
 
@@ -40,9 +39,9 @@ The utility was developed and tested for following OS. However, we expect it to 
   * `flag_export_csv`: yes|no; If results should be exported in the form of CSV (includes directory name, file name, average of lines plotted and their standard deviation)
   * `flag_export_plot`: yes|no; To specify if graphics should be exported or not
 
-## Fastest Execution (Download and go solution!)
+## Fastest execution (download and go solution!)
 
-* Download [GMXvg executable file (Windows 10/11)](https://github.com/TheBiomics/GMXvg/releases/download/v0.3/gmxvg-win-v0.3.exe) (_or check [latest or compatible release](https://github.com/TheBiomics/GMXvg/releases) for improved features_) and copy/paste the executable file in the directory where XVG is contained or the directory having subdirectories with XVG extension files. It will discover xvg extension files and process them automatically.
+* Download [GMXvg executable file (Windows 10/11)](https://github.com/TheBiomics/GMXvg/releases/download/v0.3/gmxvg-win-v0.3.exe) (_or check [latest or compatible executable](https://github.com/TheBiomics/GMXvg/releases) for improved features_) and copy/paste the executable file in the directory where XVG is contained or the directory having subdirectories with XVG extension files. It will discover xvg extension files and process them automatically.
 * After execution all xvgs will be converted to jpg. For example, "rmsd-protein.xvg" will be converted to "rmsd-protein.dpi300.jpeg".
 * After execution a CSV file containing mean and standard deviation of of the plotted lines in each xvg. For example, for gyration plot "gyration.xvg", the CSV file will hold information about `dir`: where xvg was stored, `file`: name of the xvg file which was converted to jpg,`plot`: label of the plotted line, and `mean` and `std` columns.
 * Example result output
@@ -81,11 +80,11 @@ This will discover XVG files and plot XVG in JPEG Format
 * To make any changes, fork this repository
 * To contribute, create a pull request after you fork or comment
 
-## Future Improvements
+## Future Plans
 
-* GUI
-* Edit invidiual graphs through GUI
-* Small File Size
+* GUI or web interface through local server for [interactive visualisation](https://www.chartjs.org/docs/latest/samples/animations/progressive-line.html)
+* Edit labels or text for invidiual graphs through GUI
+* Small executable size
 * Fast Executable
 * Webserver to convert and combine graphs
 
