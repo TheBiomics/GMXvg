@@ -4,6 +4,7 @@
 
 ```
 > Get [GMXvg v0.3 here](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3) for Ubuntu and Windows.
+> DOI for the v0.3 https://doi.org/10.5281/zenodo.6563932
 
 # GMXvg: Utility to Convert/Plot GROMACS XVG files
 
