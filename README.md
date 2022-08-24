@@ -6,11 +6,12 @@
 > Get [GMXvg v0.3 here](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3) for Ubuntu and Windows.
 > DOI for the v0.3 https://doi.org/10.5281/zenodo.6563932
 
-# GMXvg: Utility to Convert/Plot GROMACS XVG files
+# GMXvg: Utility to Convert/Plot GROMACS XVG files (#xmgrace)
 
 Commandline based GROMACS XVG File plotting utility.
 * Discovers all the XVG files in the current or subdirectories and converts them in specified file formats (default JPG).
 * Logs the summary of plots in a file to quickly access the plot values along with their standard deviation values.
+* This tool is an alternative to `xmgrace`
 
 ## Supported Platforms
 
