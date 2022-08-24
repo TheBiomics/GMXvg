@@ -116,7 +116,7 @@ This will discover XVG files in the subdirectory where `gmxvg` executable is pre
 * The code is free to be used by students, scholars, and professors.
 * If you want to cite the source code, please use digital object identifier or visit [doi:10.5281/zenodo.6563932](https://doi.org/10.5281/zenodo.6563931)
   - Authors: Vishal Kumar Sahu, Dr. Soumya Basu
-  - Title: GMXvg: GROMACS Graph Plotting Tool
+  - Title: GMXvg: GROMACS Graph Plotting Tool Version 0.3
   - Year: 2022
   - Published on: Zenodo
   - DOI: https://doi.org/10.5281/zenodo.6563932
