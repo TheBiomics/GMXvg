@@ -1,13 +1,15 @@
-import pandas as PD
 import os as OS
+import argparse as ARGUMENT
 import re as REGEX
-from Helper import Helper
+import pandas as PD
+from .Helper import Helper
 import matplotlib.pyplot as PLOT
 
 class GMXVGHelper(Helper):
-  name = "GMX XVG Helper"
-  version = "0.3"
-  release_date = "May 15th, 2022"
+  __name__ = "GMXvg"
+  __version__ = "0.4"
+  __subversion__ = "20221204"
+  __author__ = "Vishal K Sahu"
 
   def __init__(self, *args, **kwargs):
     super(GMXVGHelper, self).__init__(**kwargs)
@@ -315,3 +317,25 @@ class GMXVGHelper(Helper):
       self.__rearrange_files()
     else:
       self.log_error("Error with working dir.")
+
+def main():
+  print(f"{GMXVGHelper.__name__} v{GMXVGHelper.__version__}.{GMXVGHelper.__subversion__}")
+  print("=" * 80)
+  print(f"Other available options are:")
+  print(f"csv_filename, csv_filepath, path_base, path_move, path_copy, pattern_xvg, merge_patterns,")
+  print(f"export_ext, dpi, flag_plot_mean, flag_plot_std, flag_export_csv, flag_export_plot, output_files")
+  print("=" * 80)
+  _plotter = GMXVGHelper()
+  _parser = ARGUMENT.ArgumentParser(prog=GMXVGHelper.__name__)
+
+  _parser.add_argument('-b', '--path_base', nargs = None, default = OS.getcwd(), help = 'Provide base directory. Default: %(default)s.')
+  _parser.add_argument('-e', '--export_ext', nargs = "*", default = ["jpg"], help = 'Output formats. Default: %(default)s.')
+  _parser.add_argument('-d', '--dpi', nargs = "*", default = [300], help = 'Output quality. Default: %(default)s.')
+
+  _reg_args, _unreg_args = _parser.parse_known_args()
+  _reg_args = vars(_reg_args)
+  _reg_args = {_k: _reg_args[_k] for _k in _reg_args.keys() if _reg_args[_k] is not None}
+
+  _params = _plotter.unregistered_arg_parser(_unreg_args)
+  _params.update(_reg_args)
+  _plotter.export_xvg(**_params)

@@ -1,13 +1,15 @@
+#!/usr/bin/env python
+
 import argparse as ARGUMENT
 import os as OS
 
-from GMXVGHelper import GMXVGHelper
+from gmxvg import GMXVGHelper
 
 def main():
   print(f"{GMXVGHelper.name} v{GMXVGHelper.version} {GMXVGHelper.release_date}")
   print("=" * 80)
   print(f"Other available options are:")
-  print(f"csv_filename, csv_filepath, path_base, path_move, path_copy, pattern_xvg, merge_patterns,") 
+  print(f"csv_filename, csv_filepath, path_base, path_move, path_copy, pattern_xvg, merge_patterns,")
   print(f"export_ext, dpi, flag_plot_mean, flag_plot_std, flag_export_csv, flag_export_plot, output_files")
   print("=" * 80)
   _plotter = GMXVGHelper()
