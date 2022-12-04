@@ -1,6 +1,6 @@
 
 ```diff
-+ Upcoming Release GMXvg-v0.4
++ Upcoming Release GMXvg-v0.5
 
 ```
 > Get [GMXvg v0.3 here](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3) for Ubuntu and Windows.
@@ -17,21 +17,19 @@ Commandline based GROMACS XVG File plotting utility.
 
 The utility was developed and tested for following OS. However, we expect it to work on all windows and linux environment.
 
-* Windows 11
-* Ubuntu 20 LTS, Ubuntu 22 LTS
-* MacOS and other OS are not test but can generate graphs directly by using the code
-  - Make sure you have python 3.8+ is installed
-  - Clone or download the repository by visiting `https://github.com/TheBiomics/GMXvg.git`
-  - Install matplotlib and pandas using `pip` or running `pip install -r requirements.txt` from the GMXvg directory
-  - Run the example to process XVGs `<path-to-GMXvg>/gmxvg -b <path-to-dir-containing-xvg-files>`
+## Installation
+
+Install using pip as
+
+* `pip install git+https://github.com/TheBiomics/GMXvg/@GMXvg-v-0.4`
 
 ## Command Structure
 
-* `<path-to-GMXvg>/gmxvg --<key>=<value>`: Double dash separated by equal sign
-* `<path-to-GMXvg>/gmxvg -<key> <val1> <val2> <val3>` Single dash (single dash is not recommended) and multiple values
+* `gmxvg --<key>=<value>`: Double dash separated by equal sign
+* `gmxvg -<key> <val1> <val2> <val3>` Single dash (single dash is not recommended) and multiple values
 
 ## Supported overriding variables
-Use `<path-to-GMXvg>/gmxvg -h` to see all options.
+Use `gmxvg -h` to see all options.
 
   * `path_base`: Base path if running from different directory
   * `csv_filename`: File name for CSV output else default will be used
