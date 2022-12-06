@@ -110,15 +110,15 @@ This will discover XVG files in the subdirectory where `gmxvg` executable is pre
 * Fast Executable
 * Webserver to convert and combine graphs
 
-## Other things
+## Accessory Details
 * We recommend you going through the code to access the precision and quality of the generated results before you use.
 * The code is free to be used by students, scholars, and professors.
-* If you want to cite the source code, please use digital object identifier or visit [doi:10.5281/zenodo.6563932](https://doi.org/10.5281/zenodo.6563931)
-  - Authors: Vishal Kumar Sahu, Dr. Soumya Basu
-  - Title: GMXvg: GROMACS Graph Plotting Tool Version 0.3
-  - Year: 2022
+* Version 0.4 details
+  - DOI: [doi:10.5281/zenodo.7395525](https://doi.org/10.5281/zenodo.7395525)
+  - Authors: Vishal Kumar Sahu and Dr. Soumya Basu
+  - Title: GMXvg: GROMACS XVG Graph Plotting Tool Version 0.4
+  - Month & Year: December, 2022
   - Published on: Zenodo
-  - DOI: https://doi.org/10.5281/zenodo.6563932
 
 ## Recent updates
 * Rendering LaTeX Labels from XVG in matplotlib
