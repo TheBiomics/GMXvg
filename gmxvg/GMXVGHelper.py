@@ -8,7 +8,7 @@ import matplotlib.pyplot as PLOT
 class GMXVGHelper(Helper):
   __name__ = "GMXvg"
   __version__ = "0.4"
-  __subversion__ = "20221204"
+  __subversion__ = "20230829"
   __author__ = "Vishal K Sahu"
 
   def __init__(self, *args, **kwargs):

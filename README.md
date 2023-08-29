@@ -8,20 +8,21 @@
 
 # GMXvg: Utility to Convert/Plot GROMACS XVG files (#xmgrace)
 
-Commandline based GROMACS XVG File plotting utility.
+* Commandline based GROMACS XVG File plotting utility.
 * Discovers all the XVG files in the current or subdirectories and converts them in specified file formats (default JPG).
 * Logs the summary of plots in a file to quickly access the plot values along with their standard deviation values.
-* This tool is an alternative to `xmgrace`
+* This tool may be an alternative to `xmgrace`.
 
 ## Supported Platforms
 
 The utility was developed and tested for following OS. However, we expect it to work on all windows and linux environment.
 
-## Installation
+## Installation and usage
 
-Install using pip as
+Install using pypi or other directly from source using python's pip module:
 
-* `pip install git+https://github.com/TheBiomics/GMXvg/@GMXvg-v-0.4`
+* `pip install gmxvg`
+* `gmxvg --version`
 
 ## Command Structure
 
@@ -84,7 +85,7 @@ This will discover XVG files in the subdirectory where `gmxvg` executable is pre
 
 ```gmxvg --dpi 96 -merge_patterns RMSD-of-Ligand.xvg RMSD-of-Protein-C-Alpha.xvg Gyration-of-Protein.xvg NPT-Temperature.xvg Inter-Ligand-Protein-H-Bonds.xvg --replacements "Receptor1--Lig2":p53-miR5 "Recptor2--Lig3":p53-miR3 --path_move <path-to-output-dir>/graphs```
 
-* Example to merge Protein-RMSD.xvg and Ligand-RMSD.xvg files in the same directory. 
+* Example to merge Protein-RMSD.xvg and Ligand-RMSD.xvg files in the same directory.
 ```gmxvg -merge_patterns RMSD.xvg -uid_part -1```
 
 * Use `-replacements` options to replace any text in the plot will change the labels and legends of the plot
