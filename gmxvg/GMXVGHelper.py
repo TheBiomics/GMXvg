@@ -4,18 +4,20 @@ import re as REGEX
 import pandas as PD
 from .Helper import Helper
 import matplotlib.pyplot as PLOT
+import shutil as SHUtil
 
 class GMXVGHelper(Helper):
-  __name__ = "GMXvg"
+  __package__ = "GMXvg"
   __version__ = "0.4"
-  __subversion__ = "20230829"
-  __author__ = "Vishal K Sahu"
+  __subversion__ = "20230830"
+  __author__ = "Vishal Kumar Sahu"
 
   def __init__(self, *args, **kwargs):
     super(GMXVGHelper, self).__init__(**kwargs)
+    _use_tex = True if SHUtil.which('latex') else False
     PLOT.rcParams.update({
-      "text.usetex": True,
-      "font.family": "Helvetica"
+      "text.usetex": _use_tex,
+      "font.family": "sans-serif",
     })
     self.__update_attr(**kwargs)
 
@@ -319,14 +321,14 @@ class GMXVGHelper(Helper):
       self.log_error("Error with working dir.")
 
 def main():
-  print(f"{GMXVGHelper.__name__} v{GMXVGHelper.__version__}.{GMXVGHelper.__subversion__}")
+  print(f"{GMXVGHelper.__package__} v{GMXVGHelper.__version__}.{GMXVGHelper.__subversion__}")
   print("=" * 80)
   print(f"Other available options are:")
   print(f"csv_filename, csv_filepath, path_base, path_move, path_copy, pattern_xvg, merge_patterns,")
   print(f"export_ext, dpi, flag_plot_mean, flag_plot_std, flag_export_csv, flag_export_plot, output_files")
   print("=" * 80)
   _plotter = GMXVGHelper()
-  _parser = ARGUMENT.ArgumentParser(prog=GMXVGHelper.__name__)
+  _parser = ARGUMENT.ArgumentParser(prog=GMXVGHelper.__package__)
 
   _parser.add_argument('-b', '--path_base', nargs = None, default = OS.getcwd(), help = 'Provide base directory. Default: %(default)s.')
   _parser.add_argument('-e', '--export_ext', nargs = "*", default = ["jpg"], help = 'Output formats. Default: %(default)s.')

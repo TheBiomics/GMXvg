@@ -10,7 +10,7 @@
 
 * Commandline based GROMACS XVG File plotting utility.
 * Discovers all the XVG files in the current or subdirectories and converts them in specified file formats (default JPG).
-* Logs the summary of plots in a file to quickly access the plot values along with their standard deviation values.
+* Logs the summary of plots in a file (CSV file) to quickly access the plot values along with their standard deviation values.
 * This tool may be an alternative to `xmgrace`.
 
 ## Supported Platforms
