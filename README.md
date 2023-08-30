@@ -46,13 +46,13 @@ Use `gmxvg -h` to see all options.
   * `flag_export_csv`: yes|no; If results should be exported in the form of CSV (includes directory name, file name, average of lines plotted and their standard deviation)
   * `flag_export_plot`: yes|no; To specify if graphics should be exported or not
 
-## Fastest execution (download and go solution!)
+## Exe Files (download and go solution!)
 
-* **Download [GMXvg executable file (Windows 10/11)](https://github.com/TheBiomics/GMXvg/releases/download/v0.3/gmxvg-win-v0.3.exe) (_or check [latest or compatible executable](https://github.com/TheBiomics/GMXvg/releases) for improved features_) and copy/paste the executable file in the directory where XVG is contained or the directory having subdirectories with XVG extension files. It will discover xvg extension files and process them automatically.**
+* **Download [GMXvg executable file (Windows 10/11)](https://github.com/TheBiomics/GMXvg/releases/download/v0.3/gmxvg-win-v0.3.exe) (_or check [latest or compatible executable](https://github.com/TheBiomics/GMXvg/releases) for improved features_) and copy/paste the exe file in the directory where XVG is contained. It will discover all xvg extension files in current or child folders and process them automatically.**
 * After execution all xvgs will be converted to jpg. For example, "rmsd-protein.xvg" will be converted to "rmsd-protein.dpi300.jpeg".
 * After execution a CSV file containing mean and standard deviation of of the plotted lines in each xvg. For example, for gyration plot "gyration.xvg", the CSV file will show following columns
   - `dir`: where xvg was stored
-  - `file`: name of the xvg file which was converted to jp
+  - `file`: name of the processed xvg file
   - `plot`: label of the plotted line
   - `mean`: Mean of the plotted line
   - `std`: Standard deviation for the plotted line
@@ -121,6 +121,6 @@ This will discover XVG files in the subdirectory where `gmxvg` executable is pre
   - Month & Year: December, 2022
   - Published on: Zenodo
 
-## Recent updates
-* Rendering LaTeX Labels from XVG in matplotlib
-* `-uid_part <N>` updated to managed merged graphs when `/` splitted part will decide the legends in merged graphs
+## Troubleshooting installation
+
+* Use `pip cache purge` in case of installation issue
