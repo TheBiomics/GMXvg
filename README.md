@@ -105,7 +105,7 @@ This will discover XVG files in the subdirectory where `gmxvg` executable is pre
 ## Accessory Details
 * We recommend you going through the code to access the precision and quality of the generated results before you use.
 * The code is free to be used by students, scholars, and professors.
-* (Source Code and Citation)[https://doi.org/10.5281/zenodo.7395525]
+* If you want to cite our work cite the publicly hosted version using [DOI:10.5281/zenodo.6563931](https://dx.doi.org/10.5281/zenodo.6563931).
 
 ## Troubleshooting installation
 
