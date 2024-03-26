@@ -2,18 +2,18 @@ import os as OS
 import argparse as ARGUMENT
 import re as REGEX
 import pandas as PD
-from .Helper import Helper
+from UtilityLib import UtilityManager
 import matplotlib.pyplot as PLOT
 import shutil as SHUtil
 
-class GMXVGHelper(Helper):
+class GMXvg(UtilityManager):
   __package__ = "GMXvg"
   __version__ = "0.4"
   __subversion__ = "20230830"
   __author__ = "Vishal Kumar Sahu"
 
   def __init__(self, *args, **kwargs):
-    super(GMXVGHelper, self).__init__(**kwargs)
+    super(GMXvg, self).__init__(**kwargs)
     _use_tex = True if SHUtil.which('latex') else False
     PLOT.rcParams.update({
       "text.usetex": _use_tex,
@@ -134,13 +134,13 @@ class GMXVGHelper(Helper):
       _attribs = {}
       if _line.startswith("legend"):
           _ls = _line.split(" ", 1)
-          _attribs["plot_display_setting"] = GMXVGHelper.process_text(_ls[-1])
+          _attribs["plot_display_setting"] = GMXvg.process_text(_ls[-1])
       elif len(_matches) > 0:
         for _v in _matches:
-          _attribs[GMXVGHelper.process_text(_v[0])] = GMXVGHelper.process_text(_v[-1])
+          _attribs[GMXvg.process_text(_v[0])] = GMXvg.process_text(_v[-1])
       elif len(_line.split(" ", 1)) == 2:
           _ls = _line.split(" ", 1)
-          _attribs[GMXVGHelper.process_text(_ls[0])] = GMXVGHelper.process_text(_ls[-1])
+          _attribs[GMXvg.process_text(_ls[0])] = GMXvg.process_text(_ls[-1])
       return _attribs
 
   def __parse_xvg_table_attributes(self, _xvg_path):
@@ -320,15 +320,15 @@ class GMXVGHelper(Helper):
     else:
       self.log_error("Error with working dir.")
 
-def main():
-  print(f"{GMXVGHelper.__package__} v{GMXVGHelper.__version__}.{GMXVGHelper.__subversion__}")
+def xvgplot():
+  print(f"{GMXvg.__package__} v{GMXvg.__version__} (Build-{GMXvg.__subversion__})")
   print("=" * 80)
   print(f"Other available options are:")
   print(f"csv_filename, csv_filepath, path_base, path_move, path_copy, pattern_xvg, merge_patterns,")
   print(f"export_ext, dpi, flag_plot_mean, flag_plot_std, flag_export_csv, flag_export_plot, output_files")
   print("=" * 80)
-  _plotter = GMXVGHelper()
-  _parser = ARGUMENT.ArgumentParser(prog=GMXVGHelper.__package__)
+  _plotter = GMXvg()
+  _parser = ARGUMENT.ArgumentParser(prog=GMXvg.name)
 
   _parser.add_argument('-b', '--path_base', nargs = None, default = OS.getcwd(), help = 'Provide base directory. Default: %(default)s.')
   _parser.add_argument('-e', '--export_ext', nargs = "*", default = ["jpg"], help = 'Output formats. Default: %(default)s.')

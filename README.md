@@ -1,10 +1,7 @@
 
 ```diff
-> Get [GMXvg v0.3 here](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3) for Ubuntu and Windows.
-> DOI for the v0.3 https://doi.org/10.5281/zenodo.6563932
-
+> Get older binaries for Ubuntu and Windows here -> [GMXvg v0.3](https://github.com/TheBiomics/GMXvg/releases/tag/v0.3) .
 ```
-
 
 # GMXvg: Utility to Convert/Plot GROMACS XVG files (#xmgrace)
 
@@ -13,38 +10,42 @@
 * Logs the summary of plots in a file (CSV file) to quickly access the plot values along with their standard deviation values.
 * This tool may be an alternative to `xmgrace`.
 
-## Supported Platforms
-
-The utility was developed and tested for following OS. However, we expect it to work on all windows and linux environment.
-
-## Installation and usage
+## Easy to install and use
 
 Install using pypi or other directly from source using python's pip module:
 
-* `pip install gmxvg`
-* `gmxvg --version`
+* Install using: `pip install gmxvg`
+* Check Version: `gmxvg --version`
+* Usage:
+  - Switch to the directory where XVG files are located `cd <xvg-file-directory`
+  - Run `xvg`
+  - See further instructions to modify title, legends, or other outputs
+
+## Supported Platforms
+
+The utility was developed and tested for Ubuntu and Windows. However, we expect it to work on all windows, linux, and iOS environments.
 
 ## Command Structure
 
 * `gmxvg --<key>=<value>`: Double dash separated by equal sign
 * `gmxvg -<key> <val1> <val2> <val3>` Single dash (single dash is not recommended) and multiple values
 
-## Supported overriding variables
+## Overriding default variables
 Use `gmxvg -h` to see all options.
 
   * `path_base`: Base path if running from different directory
   * `csv_filename`: File name for CSV output else default will be used
   * `csv_filepath`: Path where CSV output file will be stored
-  * `path_move`: Path where generated images will be moved (will be deleted from the dir where XVG are stored)
-  * `path_copy`: Path where generated images will be copied (source graphics will be there)
-  * `pattern_xvg`: Pattern to specify XVG images for conversion e.g., *--new.xvg, old-*-temp-300.xvg
-  * `merge_patterns`: Pattern to select XVGs to group their output e.g., Protein-*-RMSD.xvg
-  * `export_ext`: Type of outputs, e.g., JPEG, PNG, JPG, PDF (Anything supported by Matplotlib)
-  * `dpi`: Resolution of the output, e.g., 72 for quick visualisation and 600 for many publications
-  * `flag_plot_mean`: yes|no; Use yes to enable plotting average line
-  * `flag_plot_std`: yes|no; Use yes to enable plotting standard deviation lines
-  * `flag_export_csv`: yes|no; If results should be exported in the form of CSV (includes directory name, file name, average of lines plotted and their standard deviation)
-  * `flag_export_plot`: yes|no; To specify if graphics should be exported or not
+  * `path_move`: Path where generated images will be moved (images will be deleted from the dir where XVG are stored)
+  * `path_copy`: Path where generated images will be copied (source graphics will NOT be deleted)
+  * `pattern_xvg`: Pattern to specify XVG images for conversion e.g., *--new.xvg, *-RMSD*.xvg (Helpful when you want to convert some selected files)
+  * `merge_patterns`: Pattern to select XVGs to group their output e.g., Protein-*-RMSD.xvg (This will merge file names matching the pattern into single graph for comparative visualisation)
+  * `export_ext`: Type of outputs, e.g., JPEG, PNG, JPG, PDF (Any output format supported by Matplotlib)
+  * `dpi`: Resolution of the output, e.g., 72 for quick visualisation and 600 for standard publications
+  * `flag_plot_mean`: yes|no; Use yes to enable plotting average value line
+  * `flag_plot_std`: yes|no; Use yes to enable plotting standard deviation line
+  * `flag_export_csv`: yes|no; If results should be exported in a CSV file (includes directory name, file name, average of lines plotted and their standard deviation)
+  * `flag_export_plot`: yes|no; To specify if graphics should be exported or not (in case only values are needed)
 
 ## Exe Files (download and go solution!)
 
@@ -59,8 +60,6 @@ Use `gmxvg -h` to see all options.
 * Example result output
 
 ![image](https://user-images.githubusercontent.com/87003331/168798303-330a9d46-2fed-4a53-b05f-35307b3a939f.png)
-
-* To obtain customised output or results see commandline operations and customisation section.
 
 ## Example Commands (using source code or executable file)
 
@@ -95,14 +94,6 @@ This will discover XVG files in the subdirectory where `gmxvg` executable is pre
 * To make any changes, fork this repository
 * To contribute, create a pull request after you fork or comment
 
-### Development and Testing to Create Executable Files
-
-* `python -m venv <path-to>-env` for Windows and `sudo apt-get install python3.8-venv` for Ubuntu
-* Install missing packages
-* `<path-to>-env/Scripts/activate` for Windows and `source <path-to>-env/bin/activate` for Ubuntu
-* `pip install pyinstaller`
-* `pyinstaller gmxvg --onefile`
-
 ## Future Plans
 
 * GUI or web interface through local server for [interactive visualisation](https://www.chartjs.org/docs/latest/samples/animations/progressive-line.html)
@@ -114,12 +105,7 @@ This will discover XVG files in the subdirectory where `gmxvg` executable is pre
 ## Accessory Details
 * We recommend you going through the code to access the precision and quality of the generated results before you use.
 * The code is free to be used by students, scholars, and professors.
-* Version 0.4 details
-  - DOI: [doi:10.5281/zenodo.7395525](https://doi.org/10.5281/zenodo.7395525)
-  - Authors: Vishal Kumar Sahu and Dr. Soumya Basu
-  - Title: GMXvg: GROMACS XVG Graph Plotting Tool Version 0.4
-  - Month & Year: December, 2022
-  - Published on: Zenodo
+* (Source Code and Citation)[https://doi.org/10.5281/zenodo.7395525]
 
 ## Troubleshooting installation
 
