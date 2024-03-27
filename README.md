@@ -10,6 +10,13 @@
 * Logs the summary of plots in a file (CSV file) to quickly access the plot values along with their standard deviation values.
 * This tool may be an alternative to `xmgrace`.
 
+## Quick Demo on Youtube
+
+[Watch Demo](https://www.youtube.com/watch?v=99Eeqjp_0kI)
+
+[![Watch Demo](https://img.youtube.com/vi/99Eeqjp_0kI/0.jpg)](https://www.youtube.com/watch?v=99Eeqjp_0kI)
+
+
 ## Easy to install and use
 
 Install using pypi or other directly from source using python's pip module:
