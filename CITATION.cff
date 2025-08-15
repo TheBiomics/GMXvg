@@ -1,0 +1,33 @@
+cff-version: 1.2.0
+title: 'GMXvg: A tool to plot GROMACS .xvg files'
+message: >-
+  Consider citing this package if used using the
+  metadata from this file.
+type: software
+authors:
+  - affiliation: 'Dr. D.Y. Patil Vidyapeeth, Pune'
+    family-names: Sahu
+    given-names: Vishal Kumar
+    orcid: 'https://orcid.org/0000-0003-1487-3526'
+  - affiliation: 'Dr. D.Y. Patil Vidyapeeth, Pune'
+    family-names: Ranjan
+    given-names: Amit
+    orcid: 'https://orcid.org/0000-0002-7900-982X'
+  - affiliation: 'Dr. D.Y. Patil Vidyapeeth, Pune'
+    family-names: Basu
+    given-names: Soumya
+    orcid: 'https://orcid.org/0000-0002-1726-0154'
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.6563931
+  - type: url
+    value: 'https://github.com/TheBiomics/GMXvg'
+repository-code: 'https://github.com/TheBiomics/GMXvg'
+url: 'https://www.thebiomics.com/node/637'
+abstract: An Automated Drug Discovery Pipeline
+keywords:
+  - GROMACS XVG Plot
+  - Graph Plot
+  - XMGrace
+version: v0.4.8
+date-released: '2024-05-25'

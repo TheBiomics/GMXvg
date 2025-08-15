@@ -2,3 +2,5 @@ __pycache__
 dist
 build
 gmxvg.spec
+*-env
+*.egg-info
