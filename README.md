@@ -44,6 +44,12 @@ Or options
 gmxvg -h
 ```
 
+Or dry run (It will download xvg example from GitHub and plot them, and store them in your desktop, look at console message)
+
+```bash
+gmxvg-test
+```
+
 ### Step 3: Create your first plot
 ```bash
 # If you have .xvg files in your current folder:
