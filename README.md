@@ -17,14 +17,31 @@ GMXvg is a command-line utility designed for converting and plotting GROMACS XVG
 
 ## 🚀 Quick Start (3 Easy Steps!)
 
-### Step 1: Install
+### Step 1: Installation
+
+Install using PIP repository:
+
 ```bash
 pip install gmxvg
 ```
 
-### Step 2: Check it works
+Or install directly from GitHub:
+
+```bash
+pip install git+https://github.com/TheBiomics/GMXvg.git
+```
+
+### Step 2: Check
+For version
+
 ```bash
 gmxvg --version
+```
+
+Or options
+
+```bash
+gmxvg -h
 ```
 
 ### Step 3: Create your first plot
@@ -62,16 +79,22 @@ gmxvg
 gmxvg -b /path/to/simulation/results
 
 # Create high-resolution plots for publication
-gmxvg -d 600 -e png pdf
-
-# Plot multiple directories at once
-gmxvg -md /path/to/folder1 /path/to/folder2 /path/to/folder3
+gmxvg -d 600 72 -e png pdf
 ```
 
 ## 📚 Learning Resources
 
 - **[Interactive Tutorial](docs/notebook.ipynb)** - Hands-on examples in Jupyter notebook
 - **[FAQ](docs/faq.md)** - Common questions and answers
+
+## 🎥 Video Demo
+
+Watch GMXvg in action:
+
+[![GMXvg Demo Video](https://img.youtube.com/vi/99Eeqjp_0kI/maxresdefault.jpg)](https://youtu.be/99Eeqjp_0kI)
+
+Click the image above or [watch on YouTube](https://youtu.be/99Eeqjp_0kI)
+
 
 ## 🏥 Troubleshooting
 
@@ -108,6 +131,29 @@ We love contributions! Here's how you can help:
 - Built for the molecular dynamics community
 - Powered by [python](https://python.org), [matplotlib](https://matplotlib.org/) and [pandas](https://pandas.pydata.org/)
 - Inspired by the need to make scientific data analysis accessible to everyone
+
+## 📖 Citation
+
+If you use GMXvg in your research, please cite it using one of the following formats:
+
+**APA Format:**
+```
+Sahu, V. K., Rathore, V., Lin, W., Ranjan, A., & Basu, S. (2025). GMXvg: A tool to plot GROMACS .xvg files (Version 1.0.2) [Computer software]. https://github.com/TheBiomics/GMXvg
+```
+
+**BibTeX Format:**
+```bibtex
+@software{Sahu_GMXvg_A_tool_2025,
+  author = {Sahu, Vishal Kumar and Rathore, Varsha and Lin, Wan-Wan and Ranjan, Amit and Basu, Soumya},
+  month = dec,
+  title = {{GMXvg: A tool to plot GROMACS .xvg files}},
+  url = {https://github.com/TheBiomics/GMXvg},
+  version = {1.0.2},
+  year = {2025}
+}
+```
+
+**DOI:** [10.5281/zenodo.6563931](https://bi0.in/doi/10.5281/zenodo.6563931)
 
 ## 💡 Inspiration
 
