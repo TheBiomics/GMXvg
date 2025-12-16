@@ -1,105 +1,120 @@
+[![PyPI Downloads](https://static.pepy.tech/badge/gmxvg)](https://pepy.tech/projects/gmxvg)
 
-# GMXvg: A tool to plot GROMACS .xvg files
+# 🧬 GMXvg: GROMACS .xvg File Plotting Tool
+
+**Transform your GROMACS simulation data into publication-ready plots**
 
 GMXvg is a command-line utility designed for converting and plotting GROMACS XVG files. It simplifies the process of handling XVG files by automatically discovering all XVG files in the current or subdirectories and converting them to specified file formats, with JPG as the default format. Additionally, GMXvg logs the summary of plots in a CSV file, providing quick access to plot values along with their standard deviation.
 
-## Features
-* Automatically discovers and converts GROMACS XVG files.
-* Supports conversion to multiple file formats (e.g., JPG, PNG, PDF).
-* Logs plot summaries in a CSV file for easy access to plot values and standard deviations.
-* Provides options to customize plot titles, legends, and other outputs.
-* Merge multiple plots
+## 🌟 Features
 
-## Quick Installation and Usage
+- **Automatic discovery** - Finds all .xvg files in directories
+- **Multiple formats** - Export to JPG, PNG, PDF, SVG, and more
+- **Batch processing** - Analyze hundreds of files at once
+- **Statistical summaries** - Automatic calculation of means and standard deviations
+- **Customizable** - Full control over plot appearance and output quality
+- **Cross-platform** - Can be installed and used on Windows, MacOS, and Linux
 
-Install using pypi or other directly from source using python's pip module:
+## 🚀 Quick Start (3 Easy Steps!)
 
-* Install using: `pip install gmxvg`
-* Check Version: `gmxvg --version`
-* Help options: `gmxvg -h`
-* Video tutorial or demo
+### Step 1: Install
+```bash
+pip install gmxvg
+```
 
-[Watch Demo](https://www.youtube.com/watch?v=99Eeqjp_0kI)
+### Step 2: Check it works
+```bash
+gmxvg --version
+```
 
-[![Watch Demo](https://img.youtube.com/vi/99Eeqjp_0kI/0.jpg)](https://www.youtube.com/watch?v=99Eeqjp_0kI)
+### Step 3: Create your first plot
+```bash
+# If you have .xvg files in your current folder:
+gmxvg
 
-* Example CSV output
+# Or specify a folder:
+gmxvg -b /path/to/your/xvg/files
+```
 
-![image](https://user-images.githubusercontent.com/87003331/168798303-330a9d46-2fed-4a53-b05f-35307b3a939f.png)
+That's it! 🎉 Your plots will be created automatically.
 
-## Supported Platforms
+## 📊 What Can You Analyze?
 
-GMXvg is developed and tested for Ubuntu (20, 22, 24) and Windows (10, 11) environments. However, it is expected to work on all Windows, Linux, and macOS platforms.
+GMXvg works with all standard GROMACS output files including:
 
-## Customise output
-### Command Structure
+| File Type | Description |
+|-----------|-------------|
+| **RMSD** | Root Mean Square Deviation - structural stability |
+| **RMSF** | Root Mean Square Fluctuation - flexibility analysis |
+| **Energy** | Potential, kinetic, and total energy plots |
+| **Temperature** | System temperature monitoring |
+| **Pressure** | System pressure analysis |
+| **Hydrogen Bonds** | Molecular interaction analysis |
 
-* `gmxvg --<key>=<value>`: Double dash separated by equal sign
-* `gmxvg -<key> <val1> <val2> <val3>` Single dash (single dash is not recommended) and multiple values
+## 💡 Examples
 
-### Overriding default variables
-Use `gmxvg -h` to see all options.
+### Basic Usage
+```bash
+# Plot all .xvg files in current directory
+gmxvg
 
-  * `path_base`: Base path if running from different directory
-  * `csv_filename`: File name for CSV output else default will be used
-  * `csv_filepath`: Path where CSV output file will be stored
-  * `path_move`: Path where generated images will be moved (images will be deleted from the dir where XVG are stored)
-  * `path_copy`: Path where generated images will be copied (source graphics will NOT be deleted)
-  * `pattern_xvg`: Pattern to specify XVG images for conversion e.g., *--new.xvg, *-RMSD*.xvg (Helpful when you want to convert some selected files)
-  * `merge_patterns`: Pattern to select XVGs to group their output e.g., Protein-*-RMSD.xvg (This will merge file names matching the pattern into single graph for comparative visualisation)
-  * `export_ext`: Type of outputs, e.g., JPEG, PNG, JPG, PDF (Any output format supported by Matplotlib)
-  * `dpi`: Resolution of the output, e.g., 72 for quick visualisation and 600 for standard publications
-  * `flag_plot_mean`: yes|no; Use yes to enable plotting average value line
-  * `flag_plot_std`: yes|no; Use yes to enable plotting standard deviation line
-  * `flag_export_csv`: yes|no; If results should be exported in a CSV file (includes directory name, file name, average of lines plotted and their standard deviation)
-  * `flag_export_plot`: yes|no; To specify if graphics should be exported or not (in case only values are needed)
+# Plot files in a specific directory
+gmxvg -b /path/to/simulation/results
 
-## Executable Files (Older version NOT RECOMMENDED!)
+# Create high-resolution plots for publication
+gmxvg -d 600 -e png pdf
 
-* **Download [GMXvg executable file (Windows 10/11)](https://github.com/TheBiomics/GMXvg/releases/download/v0.3/gmxvg-win-v0.3.exe) and copy/paste the exe file in the directory where XVGs are contained. It will discover all xvg extension files in current or child folders and process them automatically.**
+# Plot multiple directories at once
+gmxvg -md /path/to/folder1 /path/to/folder2 /path/to/folder3
+```
 
-### _path_base_: Define path if not running from the same directory
-* `gmxvg --path_base <path-to-dir-containing-xvg-files>`
+## 📚 Learning Resources
 
-### _dpi_: Generate multiple qualities of graphics
-* `gmxvg --dpi 96 300 600 --path_copy <path-to-aggregate-results-outside>`
+- **[Interactive Tutorial](docs/notebook.ipynb)** - Hands-on examples in Jupyter notebook
+- **[FAQ](docs/faq.md)** - Common questions and answers
 
-### _path_copy_: Copy all the generated graphs to another directory
-* `gmxvg --path_copy <path-to-aggregate-results-outside>`
+## 🏥 Troubleshooting
 
-### Export in multiple format(s)
-* `gmxvg --export_ext JPEG pdf`
+### Common Issues
 
-### _merge_patterns_: Merging multiple plots
+**"No .xvg files found"**
+- Make sure you're in the right directory
+- Check if files have the .xvg extension
+- Use `-b` to specify the correct path or start terminal from the directory containing your graphs
 
-* To **merge multiple xvg files** having ending (e.g., /complex1/lig.xvg, /complex2/lig.xvg, /complex3/lig.xvg) passed to `--merge_patterns RMSD.xvg` so that it will combine all to plot one file. `--uid_part -1` parameter can be useful to define the Legend of the merged graphs.
+**"Import error"**
+- Try: `pip install --upgrade gmxvg`
+- Make sure you have Python 3.6+
 
-```gmxvg --merge_patterns RMSD-of-Ligand.xvg RMSD-of-Protein-C-Alpha.xvg Gyration-of-Protein.xvg NPT-Temperature.xvg Inter-Ligand-Protein-H-Bonds.xvg```
+**"Plots look strange"**
+- Check if your .xvg files are properly formatted
 
-* Example to merge Protein-RMSD.xvg and Ligand-RMSD.xvg files in the same directory.
-```gmxvg --merge_patterns RMSD.xvg --uid_part -1```
+### Getting Help
 
-### Managing texts on the plots
+- 💬 **GitHub Issues**: [Report bugs or request features](https://github.com/yourusername/GMXvg/issues)
+- 📖 **Documentation**: [Full documentation](https://gmxvg.readthedocs.io)
 
-* Use `-replacements` options to replace any text in the plot will change the labels and legends of the plot
-```gmxvg --replacements "Receptor1--Lig2":p53-miR5 "Recptor2--Lig3":p53-miR3```
+## 🤝 Contributing
 
-## Development and Future Plans
+We love contributions! Here's how you can help:
 
-GMXvg is open-source and welcomes contributions. Future plans include:
+1. **Report bugs** - Found something broken? Let us know!
+2. **Suggest features** - What would make GMXvg better for you?
+3. **Share examples** - Help others by sharing your use cases
+4. **Improve documentation** - Help make GMXvg even more user-friendly
 
-* GUI or web interface for interactive visualization.
-* Customizable labels and text through GUI.
-* Fast and efficient executable.
+## 🙏 Acknowledgments
 
-For development and contributions, fork the repository or create a pull request.
+- Built for the molecular dynamics community
+- Powered by [python](https://python.org), [matplotlib](https://matplotlib.org/) and [pandas](https://pandas.pydata.org/)
+- Inspired by the need to make scientific data analysis accessible to everyone
 
-## Accessory Details
-* The code is free to use by students, scholars, and professors.
-* If you find the work useful and want to provide credit, you can cite the source code using [DOI:10.5281/zenodo.6563931](https://dx.doi.org/10.5281/zenodo.6563931).
+## 💡 Inspiration
 
-## Troubleshooting installation
-If you encounter installation issues, try using the pip cache purge command `pip cache purge`.
+This project is our small contribution to the molecular dynamics community. We believe that powerful data analysis tools should be accessible to everyone - from students learning computational biology to experienced researchers publishing groundbreaking papers. By simplifying the process of creating publication-ready plots from GROMACS data, we hope to save valuable time that can be better spent on scientific discovery.
 
 
+---
 
+**Ready to start analyzing your molecular dynamics data?**
+[Install GMXvg now](#-quick-start-3-easy-steps) and create your first plot in under 2 minutes! 🚀

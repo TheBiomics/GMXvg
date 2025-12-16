@@ -1,14 +1,21 @@
 cff-version: 1.2.0
-title: 'GMXvg: A tool to plot GROMACS .xvg files'
-message: >-
-  Consider citing this package if used using the
-  metadata from this file.
 type: software
+version: 1.0.2
+title: 'GMXvg: A tool to plot GROMACS .xvg files'
+message: "If you use this software, please cite it as below."
 authors:
   - affiliation: 'Dr. D.Y. Patil Vidyapeeth, Pune'
     family-names: Sahu
     given-names: Vishal Kumar
     orcid: 'https://orcid.org/0000-0003-1487-3526'
+  - affiliation: 'NTU, Taiwan'
+    family-names: Rathore
+    given-names: Varsha
+    orcid: 'https://orcid.org/0009-0008-3119-6823'
+  - affiliation: 'NTU, Taiwan'
+    family-names: Lin
+    given-names: Wan-Wan
+    orcid: 'https://orcid.org/0000-0002-3207-734X'
   - affiliation: 'Dr. D.Y. Patil Vidyapeeth, Pune'
     family-names: Ranjan
     given-names: Amit
@@ -24,10 +31,14 @@ identifiers:
     value: 'https://github.com/TheBiomics/GMXvg'
 repository-code: 'https://github.com/TheBiomics/GMXvg'
 url: 'https://www.thebiomics.com/node/637'
-abstract: An Automated Drug Discovery Pipeline
+abstract: >-
+  GMXvg is a lightweight Python package for automated parsing and plotting of
+  GROMACS `.xvg` output files. It provides an easy-to-use interface for
+  generating high-quality, publication-ready graphs. By simplifying the
+  workflow from raw simulation data to visualization, GMXvg enables
+  researchers to analyze molecular dynamics results more efficiently and reproducibly.
 keywords:
   - GROMACS XVG Plot
   - Graph Plot
   - XMGrace
-version: v0.4.8
-date-released: '2024-05-25'
+date-released: '2025-12-16'

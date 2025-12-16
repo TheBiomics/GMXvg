@@ -4,3 +4,16 @@ build
 gmxvg.spec
 *-env
 *.egg-info
+
+.DS_Store
+*.log
+*.py[co]
+*.jp*g
+*.jpeg
+*.png
+*.tiff
+*.pdf
+*.csv
+
+
+*test*

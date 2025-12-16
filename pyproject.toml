@@ -5,7 +5,7 @@
 [project]
   name = "GMXvg"
   description = "A tool to plot GROMACS .xvg files."
-  version = "0.4.8"
+  version = "1.0.2"
   authors = [
     { name="Vishal Kumar Sahu", email="mail@vishalkumarsahu.in" },
   ]
@@ -14,19 +14,28 @@
   classifiers = [
     'Operating System :: OS Independent',
     'Intended Audience :: Science/Research',
-    'Programming Language :: Python :: 3.8',
-    'Programming Language :: Python :: 3.9',
-    'Programming Language :: Python :: 3.10'
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
   ]
   dependencies = [
-    'UtilityLib',
+    'UtilityLib==2.21.4',
     'pandas',
     'matplotlib',
+    'seaborn',
     'latex',
+    'typer',
+    'rich'
+  ]
+
+[project.optional-dependencies]
+  web = [
+    "streamlit"
   ]
 
 [project.scripts]
   gmxvg = "gmxvg:xvgplot_cli"
+  gmxvg-test = "gmxvg:xvgplot_cli_test"
 
 [project.urls]
   Homepage = "https://github.com/TheBiomics/GMXvg"

@@ -1,4 +1,4 @@
-__build__ = "20240525"
+__build__ = "20250815"
 
 try:
   from importlib.metadata import distribution as _DIST
@@ -8,6 +8,6 @@ try:
   __description__ = _DIST_META['Summary']
   __name__ = _DIST_META['Name']
 except Exception as _e: # for Dev
-  __version__ = "0.4.X"
+  __version__ = "0.5.X"
   __description__ = "Dev"
   __name__ = __package__
