@@ -13,7 +13,7 @@ _cli_settings = {
     "flag_export_csv"  : (['-c'], None, "Y", 'Flag to export results as CSV (Y/N).', {}),
     "flag_export_plot" : (['-f'], None, "Y", 'Flag to export plots (Y/N).', {}),
     "flag_cleanup"     : (['-x'], None, None, 'Flag to cleanup generated files (Y/N).', {}),
-    "csv_filename"     : (['-o'], "*", "XVG-Plot-Values.csv", 'Output CSV filename for results.', {}),
+    "csv_filename"     : (['-o'], None, "XVG-Plot-Values.csv", 'Output CSV filename for results.', {}),
   }
 
 def xvgplot_cli():

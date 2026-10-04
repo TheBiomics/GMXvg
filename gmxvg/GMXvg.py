@@ -8,8 +8,14 @@ class GMXvg(ProjectManager):
 
   # Section 0: Initialization and Defaults
   def __init__(self, *args, **kwargs):
-    super().__init__(**kwargs)
-    self.__set_defaults(**kwargs)
+    # UtilityLib's path_base setter calls OS.chdir() without restoring it, so
+    # constructing GMXvg hijacks the host process cwd (and breaks tempdir cleanup).
+    _cwd = self.OS.getcwd()
+    try:
+      super().__init__(**kwargs)
+      self.__set_defaults(**kwargs)
+    finally:
+      self.OS.chdir(_cwd)
 
   def __set_defaults(self, *args, **kwargs):
     __defaults =  {
@@ -125,7 +131,8 @@ class GMXvg(ProjectManager):
     _str = self.REGEX.sub(r'[\s-]{1,}', " ", _str)
     _str = _str.replace("_", "-")
     _str = self.REGEX.sub(r'\\S(\w+)\\N', "$^\\1$", _str)
-    _str = self.REGEX.sub(r'\\s(\w)\\N', "$_\\1$", _str)
+    _str = self.REGEX.sub(r'\\s(\w+)\\N', "$_\\1$", _str)
+    _str = self.REGEX.sub(r'\\f\{[^}]*\}', "", _str)
     return _str
 
   def _clean_attributes(self, _line):

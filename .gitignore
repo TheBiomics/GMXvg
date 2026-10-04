@@ -16,4 +16,6 @@ gmxvg.spec
 *.csv
 
 
-*test*
+# test artefacts only - a bare *test* also matched any path containing "test", hiding the tests/ suite
+*-test*
+*.test

@@ -1,0 +1,53 @@
+name: ci
+
+on:
+  push:
+    branches: [development, main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Upper bound matches requires-python: UtilityLib 2.21.4 uses Path._flavour,
+        # which Python 3.13 removed. Re-include 3.13 once that is fixed.
+        python-version: ["3.10", "3.11", "3.12"]
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      # A package that cannot be installed from a clean environment is not usable,
+      # however good its plotting is - so install is tested before anything else.
+      - name: Install from source
+        run: pip install -e .
+
+      - name: CLI is importable and answers --help
+        run: |
+          python -m gmxvg --help
+          gmxvg --help
+
+      - name: Unit tests
+        run: pytest tests/ -q
+
+      # End-to-end on the shipped example set: plots, and the CSV stats path.
+      - name: End-to-end on bundled examples
+        run: |
+          mkdir -p /tmp/e2e && cp docs/example-xvgs/*.xvg /tmp/e2e/
+          python -m gmxvg -b /tmp/e2e -e jpg -d 300 -c Y
+          test "$(ls /tmp/e2e/*.jpg | wc -l)" -ge 6
+          test -s /tmp/e2e/XVG-Plot-Values.csv
+          # Regression: '-o NAME' used to be registered variadic and aborted the whole run.
+          python -m gmxvg -b /tmp/e2e -e jpg -d 300 -c Y -o named.csv
+          test -s /tmp/e2e/named.csv
+
+      - name: Fail loudly on out-of-range DPI (must exit non-zero)
+        run: |
+          if python -m gmxvg -b /tmp/e2e -d 50; then
+            echo "expected a non-zero exit for out-of-range DPI"; exit 1
+          fi
