@@ -23,7 +23,6 @@
     'pandas',
     'matplotlib',
     'seaborn',
-    'latex',
     'typer',
     'rich'
   ]

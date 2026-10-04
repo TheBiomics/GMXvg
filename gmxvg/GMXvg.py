@@ -189,8 +189,13 @@ class GMXvg(ProjectManager):
       self.export_dpi = str(self.export_dpi) if isinstance(self.export_dpi, (int, str)) else "300"
       self.export_dpi = [self.export_dpi]
 
+    _original = list(self.export_dpi)
     self.export_dpi = [str(_d) for _d in self.export_dpi if str(_d).isdigit() and self._dpi_range[0] <= int(_d) <= self._dpi_range[1]]
-    return self.unique(self.export_dpi)
+    _filtered = self.unique(self.export_dpi)
+    if _original and not _filtered:
+      self.log_info(f'No valid DPI values in {_original}. Accepted range: {self._dpi_range[0]}..{self._dpi_range[1]}', type='error')
+      raise ValueError(f'No valid DPI values in {_original}. Accepted range: {self._dpi_range[0]}..{self._dpi_range[1]}')
+    return _filtered
 
   # Section 3: Post Processing
   def _merge_xvgs(self, *args, **kwargs):
@@ -285,17 +290,21 @@ class GMXvg(ProjectManager):
       _plot.set_xlabel(_xaxis_label)
       _plot.set_ylabel(_yaxis_label)
 
-      for _ext in self._get_export_exts():
-        for _d in self._get_export_dpi():
-          _out_file = _xvg_file_path.with_suffix(f".{_d}dpi.{_ext}")
-          _figure = _plot.get_figure()
-          _figure.savefig(_out_file, dpi=int(_d), bbox_inches='tight')
-          _file_attribs = self._get_file_attrib(_out_file)
-          _file_attribs['dpi'] = _d
-          _file_attribs['ext'] = _ext
-          self.config.file_storage[_xvg_file_path.full_path]['generated_graphs'].append(_file_attribs)
-      _figure.clear()
-      self.PLOT.close(_figure)
+      _valid_dpis = self._get_export_dpi()
+      if _valid_dpis:
+        for _ext in self._get_export_exts():
+          for _d in _valid_dpis:
+            _out_file = _xvg_file_path.with_suffix(f".{_d}dpi.{_ext}")
+            _figure = _plot.get_figure()
+            _figure.savefig(_out_file, dpi=int(_d), bbox_inches='tight')
+            _file_attribs = self._get_file_attrib(_out_file)
+            _file_attribs['dpi'] = _d
+            _file_attribs['ext'] = _ext
+            self.config.file_storage[_xvg_file_path.full_path]['generated_graphs'].append(_file_attribs)
+        _figure.clear()
+        self.PLOT.close(_figure)
+      else:
+        self.log_info(f'No valid DPI values for {_xvg_file_path}, skipping plot export.', type='warn')
 
     self.config.file_storage[_xvg_file_path.full_path]['result_df'] = _plot_df
 
@@ -303,16 +312,26 @@ class GMXvg(ProjectManager):
     """Plots XVG files from the given list"""
     self.set_file_storage(*args, **kwargs)
     _result_dict = []
+    _skipped = 0
     for _file_path in self.config.file_storage._keys:
-      self._plot_xvg(_file_path, **kwargs)
+      try:
+        self._plot_xvg(_file_path, **kwargs)
+      except Exception as _e:
+        _skipped += 1
+        self.log_info(f'Skipping {_file_path}: {_e}', type='warn')
 
+    if _skipped:
+      self.log_info(f'Completed with {_skipped} file(s) skipped due to errors.', type='warn')
     self.update_config()
 
   # Section 5: Process Results
   def _generate_results(self, *args, **kwargs):
     _result_dict = []
     for _file_data in self.config.file_storage.values():
-      _result_df = _file_data.result_df.copy()
+      _result_df = _file_data.result_df
+      if not hasattr(_result_df, 'columns'):
+        continue
+      _result_df = _result_df.copy()
       for _col in _result_df.columns[1:].tolist():
         _fp = EntityPath(_file_data.file_path)
         _result_dict.append({

@@ -19,6 +19,16 @@ _cli_settings = {
 def xvgplot_cli():
   global _cli_settings
   _args = CMDLib.get_registered_args(_cli_settings, version=f"{__name__}-{__version__}")
+  # Validate DPI upfront - fail fast if invalid
+  _dpi_vals = _args.get('export_dpi', ['300'])
+  if not isinstance(_dpi_vals, list):
+    _dpi_vals = [_dpi_vals]
+  _dpi_range = (72, 2400)
+  _valid = [str(_d) for _d in _dpi_vals if str(_d).isdigit() and _dpi_range[0] <= int(_d) <= _dpi_range[1]]
+  if _dpi_vals and not _valid:
+    import sys
+    sys.stderr.write(f"Error: No valid DPI values in {_dpi_vals}. Accepted range: {_dpi_range[0]}..{_dpi_range[1]}\n")
+    sys.exit(1)
   _m = GMXvg(**_args)
   _m.plot()
 
@@ -29,19 +39,20 @@ def xvgplot_cli_test():
   # Setup destination for test examples
   _test_destination = EntityPath('~/Desktop/GMXvg-Example-XVGs').resolved()
   if _test_destination.exists():
-    _test_destination.delete(False)
-  _test_destination.validate()
+    _test_destination.delete(is_protected=False)  # force delete
+  # Don't call validate() here - it creates the directory
 
-  # Get the package directory and check for bundled examples
-  _package_dir = EntityPath(__file__).parent(1)
-  _test_examples = _package_dir / 'data/example-xvgs'
+  # Check for examples in the repo's docs directory (works in dev and pip install . from source)
+  _package_dir = EntityPath(__file__).parent()
+  _repo_root = _package_dir.parent()
+  _test_examples = _repo_root / 'docs/example-xvgs'
 
-  # Check if examples exist in the package, otherwise download from GitHub
+  # Check if examples exist, otherwise download from GitHub
   if _test_examples.exists():
-    print(f"Using bundled examples from: {_test_examples.full_path}")
+    print(f"Using examples from: {_test_examples.full_path}")
     _test_examples.copy(_test_destination)
   else:
-    print(f"Bundled examples not found. Downloading from GitHub...")
+    print(f"Examples not found. Downloading from GitHub...")
     _m_temp = GMXvg()
 
     # GitHub raw content URLs for example files

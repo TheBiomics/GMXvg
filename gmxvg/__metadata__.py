@@ -8,6 +8,6 @@ try:
   __description__ = _DIST_META['Summary']
   __name__ = _DIST_META['Name']
 except Exception as _e: # for Dev
-  __version__ = "0.5.X"
+  __version__ = "0.0.0-dev"  # pyproject.toml is the authoritative version source
   __description__ = "Dev"
   __name__ = __package__
